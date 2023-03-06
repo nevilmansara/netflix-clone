@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+ <link rel="stylesheet" href="">
+    <style>
+ 
+
+        #page-content {
+            display: none;
+        }
+
+    
+
+        body::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        body::-webkit-scrollbar-track {
+            background: var(--white);
+            border-left: 1px solid var(--cultured);
+        }
+
+        body::-webkit-scrollbar-thumb {
+            background: hsl(0, 0%, 80%);
+            border: 3px solid var(--white);
+            border-radius: 10px;
+        }
+
+        body::-webkit-scrollbar-thumb:hover {
+            background: hsl(0, 0%, 70%);
+        }
+        body {
+	 margin: 0;
+	 padding: 0;
+	 box-sizing: border-box;
+	 }
+.con{
+	background: black;
+	color: white;
+	 font-family: "Arial", sans-serif;
+	 font-size: 45px;
+	 font-weight: bold;
+	 height: 89.7vh;
+	 padding-top: 100px;
+}
+
+ .container11 {
+	 margin-left: auto;
+	 margin-right: auto;
+	 display: flex;
+	 justify-content: center;
+	 align-items: center;
+	 flex-direction: column;
+	 width: 500px;
+	 text-decoration: none;
+	 color: white;
+	
+}
+ .logo {
+	 position: relative;
+	 width: 360px;
+	 height: 520px;
+	 animation: 4s fadein;
+}
+ .logo .uno, .logo .dos, .logo .tres {
+	 position: absolute;
+	 width: 120px;
+	 height: 100%;
+	 background: #b00612;
+}
+ .logo .uno {
+	 left: 0;
+}
+ .logo .dos {
+	 background: #e50815;
+	 left: 0;
+	 z-index: 1;
+	 transform-origin: top left;
+	 transform: skewX(25.4deg);
+	 box-shadow: 0 0 20px black;
+}
+ .logo .tres {
+	 right: 0;
+}
+ .logo::before {
+	 display: block;
+	 content: '';
+	 position: absolute;
+	 left: 50%;
+	 bottom: 0;
+	 transform: translateX(-50%);
+	 z-index: 10;
+	 width: 120%;
+	 height: 30px;
+	 background: black;
+	 border-top-left-radius: 50% 100%;
+	 border-top-right-radius: 50% 100%;
+}
+ .name {
+	 text-transform: uppercase;
+	 letter-spacing: 15px;
+	 animation: 4s name linear;
+}
+ @keyframes fadein {
+	 0% {
+		 opacity: 0;
+		 transform: scale(0.8);
+	}
+	 100% {
+		 opacity: 1;
+		 transform: scale(1);
+	}
+}
+ @keyframes name {
+	 0% {
+		 opacity: 0;
+		 transform: scale(0.8);
+	}
+	 80% {
+		 opacity: 0;
+		 transform: scale(0.8);
+	}
+	 100% {
+		 opacity: 1;
+		 transform: scale(1);
+	}
+}
+ 
+     
+       
+
+
+
+
+
+    </style>
+</head>
+
+<body>
+     <div class="con" id="loader">
+        <a class="container11" href="#">
+            <div class="logo">
+                <div class="uno"></div>
+                <div class="dos"></div>
+                <div class="tres"></div>
+            </div>
+            <div class="name">TEAM - A</div>
+        </a>
+    </div>
+
+
+    <div class="contai " id="page-content">
+
+<h1>hello</h1>
+
+    </div>
+
+
+
+
+  
+    <script>
+        window.addEventListener('load', function () {
+            const loader = document.querySelector('#loader');
+            const content = document.querySelector('#page-content');
+
+            setTimeout(() => {
+                loader.style.display = 'none';
+                content.style.display = 'block';
+            }, 7000); // Change the delay time to suit your needs
+        });
+      
+
+    </script>
+</body>
+
+</html>

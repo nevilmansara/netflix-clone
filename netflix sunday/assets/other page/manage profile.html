@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdn.lordicon.com/ritcuqlt.js"></script>
+    <style>
+        .flex {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        body {
+            background-color: #141414;
+            position: relative;
+        }
+
+        .with {
+            width: 200px;
+            height: 200px;
+        }
+
+        .white:hover {
+            cursor: pointer;
+            border: 3px solid rgba(255, 255, 255, 0.913);
+            border-radius: 2px;
+        }
+
+        .back:hover {
+            background-color: rgba(255, 255, 255, 0.149);
+        }
+
+        .ic {
+            transform: rotate(135deg);
+        }
+        .redbtn{
+            background-color: white;
+          width: 120px;
+          height: 55px;
+          border-radius: 5px;
+          font-size: 16px;
+          
+        }
+        .redbtn:hover{
+            background-color: red;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s all;
+            
+        }
+        .box{
+
+margin-top: 10%;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid text-white">
+        <div class="box">
+            <p class="h1 text-center">Manage Profiles:</p>
+            <div class="row flex mt-5">
+                <div class="col-12 col-lg-2 col-md-3 col-sm-4 p-4 flex  ">
+                    <div class="row with">
+                        <div class="col  flex ">
+
+                            <img src="https://i.postimg.cc/26Gp6gJr/pensil.png" alt="" class="img-fluid white ">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-2 col-md-3 col-sm-4 p-4 flex  ">
+                    <div class="row with">
+                        <div class="col  flex ">
+                            <img src="https://i.postimg.cc/MGXfd87r/fwf.png" alt="" class="img-fluid white">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-2 col-md-3 col-sm-4 p-4 flex ">
+                    <div class="row with">
+                        <div class="col  flex back">
+                            <lord-icon src="https://cdn.lordicon.com/nhfyhmlt.json" class="ic" trigger="hover"
+                                colors="primary:#808080" style="width:150px;height:150px">
+                            </lord-icon>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col flex mt-5">
+              <a href="/assets/other page/main.html"><button class="redbtn fw-bolder">Done</button></a>  
+               
+            </div>
+           
+        </div>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

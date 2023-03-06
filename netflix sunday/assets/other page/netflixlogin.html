@@ -1,0 +1,73 @@
+
+
+<body>
+  <!DOCTYPE html>
+  <html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="codewithanonymous.png" type="image/x-icon">
+    <title> Netflix Login Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link rel="stylesheet" href="/assets/css/netflixlogin.css">
+
+  </head>
+
+  <body>
+    <!-- partial:index.partial.html -->
+    <a class="logo" href="/index.html"><img
+        src="https://bit.ly/2VdIFUK" /></a>
+    <div class="container">
+      <div class="bg-img"></div>
+      <div class="content">
+        <form action="">
+          <div>
+            <input type="email" name="email" placeholder="Email">
+            <input type="password" name="password" placeholder="Password" id="otp-input">
+          </div>
+          <button type="button" id="generate-otp-button" onclick="generateOTP()">Generate Password</button>
+          <button type="button" id="otp-button" onclick="validateOTP()">Sign In</button>
+        </form>
+        <p>New to Netflix ? <a href="#">Sign up now</a></p>
+       
+      </div>
+    </div>
+    <!-- partial -->
+    <script>
+
+      // Generate OTP function
+      function generateOTP() {
+        var digits = '0123456789';
+        var OTP = '';
+        for (let i = 0; i < 4; i++) {
+          OTP += digits[Math.floor(Math.random() * 10)];
+        }
+        sessionStorage.setItem('OTP', OTP);
+        alert('Your Password is: ' + OTP);
+      }
+
+      // Validate OTP function
+      function validateOTP() {
+        // Get user input
+        var userInput = document.getElementById('otp-input').value;
+
+        // Get generated OTP
+        var OTP = sessionStorage.getItem('OTP');
+
+        // Validate user input
+        if (userInput === OTP) {
+          window.open("https://www.netflix.com/in/")
+
+        } else {
+          alert('Plese Enter a Valid Password');
+
+        }
+      }
+
+    </script>
+  </body>
+
+  </html>
+</body>
+
+</html>

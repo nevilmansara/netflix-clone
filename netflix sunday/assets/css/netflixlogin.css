@@ -1,0 +1,201 @@
+body {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  background-image: url(https://i.postimg.cc/3JyM80JS/IN-en-20230227-popsignuptwoweeks-perspective-alpha-website-large.jpg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background-color: rgba(0, 0, 0, 0.506);
+  background-blend-mode: multiply;
+  
+}
+body .logo {
+  position: absolute;
+  align-self: flex-start;
+  left: 10px;
+}
+body .logo img {
+  height: 75px;
+  width: auto;
+}
+body .login {
+  display: flex;
+  flex-direction: column;
+  background: rgba(0, 0, 0, 0.75);
+  border-radius: 4px;
+  width: 300px;
+  height: 500px;
+  padding: 60px 68px 40px;
+}
+body .login__title {
+  margin-bottom: 20px;
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: #fff;
+}
+body .login__group {
+  position: relative;
+  z-index: 10;
+  display: flex;
+}
+body .login__group__label {
+  position: absolute;
+  z-index: 150;
+  color: #b3b3b3;
+  font-size: 0.9rem;
+  top: 30px;
+  left: 18px;
+  transition: all 300ms ease-in;
+}
+body .login__group__input {
+  width: 100%;
+  position: relative;
+  z-index: 100;
+  background: #333;
+  margin-bottom: 20px;
+  border-radius: 4px;
+  border: none;
+  opacity: 1;
+  font-size: 1rem;
+  color: #fff;
+  line-height: 50px;
+  padding: 12px 18px 0;
+  
+}
+body .login__group__input:focus + .login__group__label {
+  top: 15px;
+  font-size: 0.7rem;
+}
+body .login__sign-in {
+  margin: 24px 0 12px;
+  padding: 16px;
+  color: #fff;
+  background: #e50914;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+body .login__secondary-cta {
+  position: relative;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+}
+body .login__secondary-cta__text {
+  opacity: 1;
+  font-size: 0.9rem;
+  color: #b3b3b3;
+  text-decoration: none;
+}
+body .login__secondary-cta__text--need-help {
+  transition: all 0.3s ease-in;
+}
+body .login__secondary-cta__text--need-help:hover {
+  text-decoration: underline;
+}
+
+body{
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.container{
+  position: relative;
+  width: 295px;
+  height: 500px;
+  background: #121212;
+  border-radius: 20px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, .4);
+  overflow: hidden;
+}
+.bg-img{
+  position: absolute;
+  top: -60px;
+  width: 100%;
+  height: 300px;
+  background: url("https://i.postimg.cc/pLxgDGJ7/picture.jpg") center / cover;
+
+}
+.container::before{
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background: linear-gradient(to top,#121212 65%, transparent);
+
+}
+
+.content{
+  position: absolute;
+  bottom: 0;
+  z-index: 2;
+  width: 100%;
+  height: 330px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  font-family: 'popins', sans-serif;
+}
+form{
+  width: 260px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+form input , button{
+  border: none;
+  height: 40px;
+  outline: none;
+  border-radius: 2px;
+}
+form input{
+  width: 260px;
+  margin: 5px 0;
+  background: #313131;
+  padding: 0 10px;
+  color: white;
+}
+form input::placeholder{
+  font-family: 'popins', sans-serif;
+}
+#otp-button{
+  background: #E50813;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bolder;
+  font-family: 'popins' , sans-serif;
+}
+.content p{
+  width: 200px;
+  color: #737373;
+  font-size: 13px;
+}
+.content p a{
+  text-decoration: none;
+  color: #fff;
+}
+#generate-otp-button{
+  background: #313131;
+  color: #fff;
+  width: 150px;
+  font-weight: bolder;
+  font-family: 'popins' , sans-serif;
+  margin-left: auto;
+  margin-right: auto;
+ margin-bottom: 4px;
+}

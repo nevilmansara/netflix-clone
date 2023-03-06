@@ -1,0 +1,546 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      overflow-x: hidden;
+      color: #fff;
+      background-color: #141414;
+      margin: 0 auto;
+    }
+
+    body * {
+      font-family: Arial, sans-serif;
+    }
+
+    body p,
+    body h1,
+    body h2,
+    body h3,
+    body h4,
+    body h5,
+    body h6 {
+      margin: 0;
+    }
+
+    body a {
+      color: #666;
+      text-decoration: none;
+    }
+
+    body ul,
+    body li {
+      padding: 0;
+      margin: 0;
+      list-style-type: none;
+    }
+
+    main {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      align-items: flex-start;
+      justify-content: center;
+      align-content: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    section {
+      width: 100%;
+      transition: ease all 0.5s;
+    }
+
+    section.hidden {
+      opacity: 0;
+      transition: none;
+    }
+
+    section.hidden:nth-child(odd) {
+      transform: translateX(-50%);
+    }
+
+    section.hidden:nth-child(even) {
+      transform: translateX(50%);
+    }
+
+    .container {
+      width: 90%;
+      padding: 25px 0;
+      margin: 0 auto;
+    }
+
+    .header {
+      font-size: 18px;
+      font-weight: 900;
+      margin-bottom: 20px;
+    }
+
+    .moviesSection:not(.top10) {
+      filter: blur(8px);
+    }
+
+    .moviesSection.top10 {
+      position: relative;
+    }
+
+    .moviesSection.top10:after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 5%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, #141414);
+    }
+
+    .moviesSection.top10 .moviesWrapper .movie {
+      margin: 0 10px;
+      counter-increment: indexs;
+      cursor: pointer;
+    }
+
+    .moviesSection.top10 .moviesWrapper .movie:before {
+      content: counter(indexs);
+      width: 102px;
+      height: 160px;
+      line-height: 147px;
+      color: #000;
+      font-size: 213px;
+      font-weight: 900;
+      -webkit-text-stroke: 5px #595959;
+    }
+
+    .moviesSection.top10 .moviesWrapper .movie .thumb {
+      width: 110px;
+      height: 160px;
+    }
+
+    .moviesSection .moviesWrapper {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-items: center;
+      justify-content: flex-start;
+      align-content: center;
+      counter-reset: indexs;
+    }
+
+    .moviesSection .moviesWrapper .movie {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-items: center;
+      justify-content: flex-start;
+      align-content: center;
+      margin: 0 2px;
+      position: relative;
+    }
+
+    .moviesSection .moviesWrapper .movie .thumb {
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      width: 200px;
+      height: 120px;
+      border-radius: 3px;
+    }
+
+    #movieModal {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 350px;
+      border-radius: 5px;
+      background-color: #141414;
+      transform: translateY(-50%);
+      box-shadow: 0 2px 10px 0 #000;
+      z-index: 1000;
+      transition: ease all 0.3s;
+    }
+
+    #movieModal.centered {
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    #movieModal.righted {
+      left: 100%;
+      transform: translate(-100%, -50%);
+    }
+
+    #movieModal.hidden {
+      left: 50%;
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.5);
+    }
+
+    #movieModal .portada {
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      width: 100%;
+      height: 200px;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+    }
+
+    #movieModal .info {
+      padding: 20px;
+    }
+
+    #movieModal .info .botones,
+    #movieModal .info .datos,
+    #movieModal .info .tags {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-items: center;
+      justify-content: flex-start;
+      align-content: center;
+    }
+
+    #movieModal .info .botones .boton {
+      width: 40px;
+      height: 40px;
+      padding: 8px;
+      border-radius: 50%;
+      border: 2px solid #595959;
+      background-color: rgba(255, 255, 255, 0.05);
+      box-sizing: border-box;
+      position: relative;
+    }
+
+    #movieModal .info .botones .boton:not(.play):hover:before {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      width: max-content;
+      padding: 10px 20px;
+      border-radius: 3px;
+      color: #000;
+      font-size: 14px;
+      font-weight: 600;
+      background-color: #fff;
+      transform: translate(-50%, -18px);
+      box-shadow: 0 2px 10px 0 #000;
+    }
+
+    #movieModal .info .botones .boton:not(.play):hover:after {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 0;
+      transform: translateY(-18px);
+      border-top: 10px solid #fff;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+    }
+
+    #movieModal .info .botones .boton:not(.arrow) {
+      margin-right: 10px;
+    }
+
+    #movieModal .info .botones .boton.arrow {
+      margin-left: auto;
+    }
+
+    #movieModal .info .botones .boton.play {
+      border-color: #fff;
+      background-color: #fff;
+    }
+
+    #movieModal .info .botones .boton.play svg path {
+      fill: #000;
+      stroke-width: 0;
+    }
+
+    #movieModal .info .botones .boton svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    #movieModal .info .botones .boton svg path {
+      fill: none;
+      stroke: #fff;
+      stroke-width: 2;
+      stroke-miterlimit: 10;
+    }
+
+    #movieModal .info .datos {
+      margin: 20px 0;
+      font-weight: 600;
+    }
+
+    #movieModal .info .datos .match {
+      color: #46d369;
+    }
+
+    #movieModal .info .datos .clasificacion {
+      margin: 0 10px;
+      padding: 4px 8px;
+      font-size: 14px;
+      border: 1px solid #fff;
+    }
+
+    #movieModal .info .tags {
+      flex-wrap: wrap;
+      font-weight: 600;
+    }
+
+    #movieModal .info .tags .tag {
+      margin: 5px 5px 5px 0;
+    }
+
+    #movieModal .info .tags .tag:not(:first-child):before {
+      content: "\2022";
+      margin-right: 5px;
+      opacity: 0.5;
+    }
+
+    @media only screen and (max-width: 500px) {
+      .moviesSection.top10 .moviesWrapper {
+        overflow-x: scroll;
+        overflow-y: hidden;
+      }
+
+      .moviesSection.top10 .moviesWrapper::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+
+    <section class="moviesSection hidden top10">
+      <div class="container">
+        <h1 class="header">10 más populares en México hoy</h1>
+        <div class="cards moviesWrapper"></div>
+      </div>
+    </section>
+
+  </main>
+  <script>
+    const movies = [
+      {
+        clasificacion: "TV-MA",
+        duracion: "1 h 39 min",
+        match: "Nuevo",
+        nombre: "La bestia",
+        portada:
+          "https://i.makeagif.com/media/3-11-2014/QC2A63.gif",
+        tags: ["Crudo", "Enérgico", "Thriller de acción"],
+        thumb:
+          "https://occ-0-33-37.1.nflxso.net/dnm/api/v6/evlCitJPPCVCry0BZlEFb5-QjKc/AAAABdoVhu2NOFG1_eXU8YBHMnL4IQ2zeU_Lj5FQttHXmo0mvqf8kDqBBdSTO7BZdaTgkaW6WSdJIAwPXEH5c3ZPkcH4qKRuufLM6ntahkTD51yzJKCs8RYJhe5dQZtOhg.jpg?r=76b"
+      },
+      {
+        clasificacion: "PG",
+        duracion: "1 h 55 min",
+        match: "Nuevo",
+        nombre: "Las crónicas de navidad",
+        portada:
+          "https://media.tenor.com/KssNqen4LrwAAAAd/kgf-kgfmass.gif",
+        tags: ["Emocionante", "Optimista", "Comedia de acción"],
+        thumb:
+          "https://occ-0-33-37.1.nflxso.net/dnm/api/v6/evlCitJPPCVCry0BZlEFb5-QjKc/AAAABQFG86Dt44u21VoR_NPR1BQGCokC7vOj5Y_oTsUZnOAWCesnihR2I-UlH48Rnm7DIK_WahA6fSrJJrsdXBTcMAp5iwlZeyuzqoqUKNPel9ota89mCFBcei6xdcFYZg.jpg?r=62d"
+      },
+      {
+        clasificacion: "TV-MA",
+        duracion: "1 temporada",
+        match: "94% para ti",
+        nombre: "100 días para enamorarnos",
+        portada:
+          "https://thumbs.gfycat.com/AncientPracticalAzurewingedmagpie-size_restricted.gif",
+        tags: ["Telenovelesco", "Emotivo", "Romántico"],
+        thumb:
+          "https://occ-0-33-37.1.nflxso.net/dnm/api/v6/evlCitJPPCVCry0BZlEFb5-QjKc/AAAABQXnP1mibVfw3kySv4Wlzh1JrE2WyRv9J4aZbZ8_JDL2tEx953vHAtN0Nhve7YOvvv0HDcgHOXhC6-11S87fwTPrFQN_.jpg?r=8a4"
+      },
+      {
+        clasificacion: "TV-MA",
+        duracion: "1 h 42 min",
+        match: "Nuevo",
+        nombre: "Mosul",
+        portada:
+          "https://thumbs.gfycat.com/AliveWellgroomedHawk-size_restricted.gif",
+        tags: ["Crudo", "Siniestro", "Thriller de acción"],
+        thumb:
+          "https://occ-0-33-37.1.nflxso.net/dnm/api/v6/evlCitJPPCVCry0BZlEFb5-QjKc/AAAABeuw81XhdpTb-UHoHeRPKfNEr2_GaMfSJqPi1ViVL-dRCMN1Wlr-csDmNG27mZcg2UcnLKYRcOPBBglPwDK8CCs7DvzCLDlyaH5IKovtYGu6gXXduUdi5EAzVXL8jw.jpg?r=53a"
+      },
+      {
+        clasificacion: "TV-MA",
+        duracion: "1 h 38 min",
+        match: "Nuevo",
+        nombre: "Voces",
+        portada:
+          "https://media.tenor.com/gZdnQT3-k8MAAAAC/all-is-well-3idiots.gif",
+        tags: ["Psicológico", "Siniestro", "De suspenso"],
+        thumb:
+          "https://occ-0-33-37.1.nflxso.net/dnm/api/v6/evlCitJPPCVCry0BZlEFb5-QjKc/AAAABRrlyMYGaWocQ-xUGqorSUyG0zXspflDdmU6tgA9g0lU1JsdLh5caTTQmiaEMTamhfX0A-j8zATa4C_FiGhL9We8q0lBtAy06yMQ4KvthwfJrMYVFmv5BkHgMKhVKQ.jpg?r=a2e"
+      },
+      {
+        clasificacion: "TV-14",
+        duracion: "2 temporadas",
+        match: "98% para ti",
+        nombre: "Un lugar para soñar",
+        portada:
+          "https://24.media.tumblr.com/8dcd3cfed566fa8e808b2b31fb76b589/tumblr_mrecug5eHQ1sezoa7o1_250.gif",
+        tags: ["Íntimo", "Emotivo", "Romántico"],
+        thumb:
+          "https://occ-0-33-37.1.nflxso.net/dnm/api/v6/evlCitJPPCVCry0BZlEFb5-QjKc/AAAABUWKtZzgFXImXjzJj8YHN5U3BjUOTQ3qsOF4Z4j73qiN4d8FEsZ1vzMVjHMoZoWJdcAN8SyfhFM74noQYmu_kYSOucV0Q58R4feKKLG6hGNcnksg8HpLgG_g3NFT4KlHgDnXaaMJy_lut1-hJY0yFy_bLZeeDEI.jpg?r=64c"
+      },
+      {
+        clasificacion: "TV-MA",
+        duracion: "Miniserie",
+        match: "99% para ti",
+        nombre: "Gambito de dama",
+        portada:
+          "https://occ-0-33-37.1.nflxso.net/dnm/api/v6/X194eJsgWBDE2aQbaNdmCXGUP-Y/AAAABY0k3-XrXx0_5dIj1H88TnIXTw2gf_9tOKZNH_7EFeQ7pRGmKGx_1OnN6soSLLmUptDtqYs_L-g_YZzaZy2POr0kPYw1JMSx6k3GdodT6OPLV44wjmuOmLYv1t7c4vFV_GKuju1qEyMTxebeuadOLvqlEGQFLJoL2QCWieEbhgkrdQQy0SCkoX8k.jpg?r=402",
+        tags: ["Complejo", "Íntimo", "Emotivo"],
+        thumb:
+          "https://occ-0-33-37.1.nflxso.net/dnm/api/v6/evlCitJPPCVCry0BZlEFb5-QjKc/AAAABV7nw1c092OdlLiws9sXGF_UUPv46-WQAaT9QLEVjebQNBOgpG06FF-0-hZUYcr0rGaBl5LRjV0tm7wHerW9T2PVMb1Mh7f0IjaFMToQkoZirnTSy7rJLjzFRugarw.jpg?r=638"
+      },
+      {
+        clasificacion: "TV-MA",
+        duracion: "4 temporadas",
+        match: "98% para ti",
+        nombre: "The crown",
+        portada:
+          "https://occ-0-33-37.1.nflxso.net/dnm/api/v6/X194eJsgWBDE2aQbaNdmCXGUP-Y/AAAABdGhDCaJPGRXb1MylrkE_C1-mlns3o9wrQBCycbTn44j32VkXgtoAV93LvzmY0WZQm7Q_xRO6tvmH_K1F2qFT-c71QRka6OQZ8m4lYF0O9bZceVHV9eSR7mb-7tBRvwBD1WjfvvJsrEldniAy9yL3caNMlega3jyZAW-BexsqXB6Bnr-McTK3Bf8yydJsDPxXGK-Kv5GF16oK1C-j0hf9EJ2Lg.jpg?r=d3b",
+        tags: ["Fastuoso", "Íntimo", "Drama"],
+        thumb:
+          "https://occ-0-33-37.1.nflxso.net/dnm/api/v6/evlCitJPPCVCry0BZlEFb5-QjKc/AAAABQHxoDg-OXJyCqoSYJAXN33LQrwW8MJFQhLi65l5v5mcLW6Td97gGBomegzi4OGju0OszdIeuCfJSEo1M-rmgqoVXO-_WqvrOu5VSo3vpHQRlYKn5G6fPv6S-rlRACYXRPgESO4mD8NwsNroPZ-OrkDHwea9BWU.jpg?r=7e5"
+      },
+      {
+        clasificacion: "TV-PG",
+        duracion: "1 h 45 min",
+        match: "96% para ti",
+        nombre: "Las crónicas de navidad",
+        portada:
+          "https://occ-0-33-37.1.nflxso.net/dnm/api/v6/X194eJsgWBDE2aQbaNdmCXGUP-Y/AAAABXSEFpS7MXCfMnZP0zLU3ET7yVnwWUF7Rllb92Xi1BZFc3y5Re_hcT8ihL395cf_6AAEslhmv1mJsnSux3sSp_irPyEdO_46zGMbYG5VGaVO4KD2l_7asN_yBxVF_UBhXmg9lD-g--AqEmArK3NoJ3SWc8T2axWNRJ75PWWtT9YISJpLOJQ-CQl2.jpg?r=4c4",
+        tags: ["Emocionante", "Optimista", "Comedia de acción"],
+        thumb:
+          "https://occ-0-33-37.1.nflxso.net/dnm/api/v6/evlCitJPPCVCry0BZlEFb5-QjKc/AAAABRRMNlFkdGoA3q5rcYezJFS50-F1qIyVKU2v4lYVKH1zKnH13j2yM3pDkj0nYu9jQIxJH4W73UORnhZpledfT3nasIhjJ4YyYmAq_5VrwIZiGzpdJBTG37Lq_yERnw.jpg?r=395"
+      },
+      {
+        clasificacion: "PG",
+        duracion: "1 h 35 min",
+        match: "Nuevo",
+        nombre: "Bob esponja al rescate",
+        portada:
+          "https://occ-0-33-37.1.nflxso.net/dnm/api/v6/X194eJsgWBDE2aQbaNdmCXGUP-Y/AAAABbT2F2ZLaSpg3xkHUAjzOS3rcHgcGtVWJVHh6LUnWsfWm8Focz-b3f-xJ9qgJfvB2qyfp-eYxW5U_QaKyyr6wWkCqHr34dlkLEkX8vfdHtpF-O7QQAK5fZzBzqqDyiWvlOyVVisfEyUwVMhNnQM99Q3MDvSZB0Zv4zde7tkMg1mAcET-JZUGYwgw.jpg?r=81a",
+        tags: ["Disparatado", "Emocionante", "Infantiles"],
+        thumb:
+          "https://occ-0-33-37.1.nflxso.net/dnm/api/v6/evlCitJPPCVCry0BZlEFb5-QjKc/AAAABRbkidT-GFeslVs43LI549F6vBzFrXfL2mNpdyPlCfP89RqxA1Sp2E-PvRrH9uqCs6nzK2BCh90JrkpU8GoGgKshI0kl3ZvV17OUmkA539R_Tq3KDiyJkZw5TMAG8g.jpg?r=7db"
+      }
+    ];
+    const botones = [
+      {
+        clase: "play",
+        icono:
+          '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M6 2l52 30L6 62V2z"></path></svg>'
+      },
+      {
+        clase: "plus",
+        icono:
+          '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M32 16v32m16-16H16"></path></svg>',
+        tooltip: "Agregar a mi lista"
+      },
+      {
+        clase: "like",
+        icono:
+          '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M54 35h2a4 4 0 1 0 0-8H34a81 81 0 0 0 2-18 4 4 0 0 0-8 0s-4 22-18 22H4v24h10c4 0 12 4 16 4h20a4 4 0 0 0 0-8h2a4 4 0 0 0 0-8h2a4 4 0 0 0 0-8"></path></svg>',
+        tooltip: "Me gusta"
+      },
+      {
+        clase: "dislike",
+        icono:
+          '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M10 29H8a4 4 0 0 0 0 8h22a81 81 0 0 0-2 18 4 4 0 0 0 8 0s4-22 18-22h6V9H50c-4 0-12-4-16-4H14a4 4 0 0 0 0 8h-2a4 4 0 0 0 0 8h-2a4 4 0 0 0 0 8"></path></svg>',
+        tooltip: "No es para mí"
+      },
+      {
+        clase: "arrow",
+        icono:
+          '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path  d="M20 26l11.994 14L44 26"></path></svg>',
+        tooltip: "Más información"
+      }
+    ];
+    const wrapperMovies = document.querySelectorAll(".moviesWrapper");
+    const moviesSection = document.querySelectorAll(".moviesSection");
+    wrapperMovies.forEach((wrapper, i) => {
+      movies.map((movie, j) => {
+        wrapper.innerHTML += `
+    <div class="movie ${moviesSection[i].classList.contains("top10") ? "main" : ""
+          }">
+      <div class="thumb" style="background-image: url(${movie.thumb})"></div>
+    </div>`;
+      });
+    });
+
+    window.addEventListener("load", () => {
+      moviesSection.forEach((section, index) => {
+        section.style.transitionDelay = `${index * 0.1}s`;
+        section.classList.remove("hidden");
+      });
+      document.querySelectorAll(".movie.main").forEach((element, index) => {
+        element.addEventListener("mouseenter", () => {
+          if (window.innerWidth <= 500) return false;
+          const modales = document.querySelectorAll("#movieModal");
+          if (modales)
+            modales.forEach((modal) => {
+              modal.classList.add("hidden");
+              setTimeout(() => modal.remove(), 100);
+            });
+          const modal = document.createElement("div");
+          modal.id = "movieModal";
+          modal.classList.add("hidden");
+          let htmlBotones = "";
+          let htmlTags = "";
+          botones.map(
+            (boton) =>
+            (htmlBotones += `<div class="boton ${boton.clase}" ${boton.tooltip ? `data-tooltip="${boton.tooltip}"` : ""
+              }>${boton.icono}</div>`)
+          );
+          movies[index].tags.map(
+            (tag) => (htmlTags += `<div class="tag">${tag}</div>`)
+          );
+          modal.innerHTML += `
+      <div class="portada" style="background-image: url(${movies[index].portada})"></div>
+      <div class="info">
+        <div class="botones">${htmlBotones}</div>
+        <div class="datos">
+          <div class="match">${movies[index].match}</div>
+          <div class="clasificacion">${movies[index].clasificacion}</div>
+          <div class="duracion">${movies[index].duracion}</div>
+        </div>
+        <div class="tags">${htmlTags}</div>
+      </div>`;
+          if (element.getBoundingClientRect().x + 350 > window.innerWidth) {
+            modal.classList.add("righted");
+          } else if (element.getBoundingClientRect().x > 350 / 2) {
+            modal.classList.add("centered");
+          }
+          element.append(modal);
+          setTimeout(() => modal.classList.remove("hidden"), 100);
+        });
+        element.addEventListener("mouseleave", () => {
+          const modal = document.getElementById("movieModal");
+          if (modal) {
+            modal.classList.add("hidden");
+            setTimeout(() => modal.remove(), 300);
+          }
+        });
+      });
+    });
+
+  </script>
+</body>
+
+</html>
